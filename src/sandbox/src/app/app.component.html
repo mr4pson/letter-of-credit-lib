@@ -8,16 +8,16 @@
         </psb-button>
         <psb-button
             [isSubmit]="true"
-            (buttonClick)="handleNewPaymenyClick()"
+            (buttonClick)="handleNewPaymentClick()"
         >
             Новый платеж
         </psb-button>
     </div>
 </div>
-<loc-letter-of-credit></loc-letter-of-credit>
 <div class="container">
+    <loc-letter-of-credit></loc-letter-of-credit>
     <form
-        *ngIf="showNewPayment"
+        *ngIf="isNewPaymentShown"
         [formGroup]="newPaymentForm"
     >
         <h1>Новый платеж</h1>
@@ -132,6 +132,10 @@
                 ></psb-text-input>
             </div>
         </section>
-        <psb-button (buttonClick)="handleFormSend()">Новый покрытый акредитив</psb-button>
+        <div class="row">
+            <psb-button (buttonClick)="handleSend()">Отправить</psb-button>
+            <psb-button (buttonClick)="handleSign()">Подписать</psb-button>
+            <psb-button (buttonClick)="handleSave()">Сохранить</psb-button>
+        </div>
     </form>
 </div>

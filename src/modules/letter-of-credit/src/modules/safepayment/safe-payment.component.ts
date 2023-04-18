@@ -15,7 +15,6 @@ import { ButtonSize, ButtonType } from "@psb/fe-ui-kit/src/components/button";
 import { SafePaymentButton } from "../../enums/safe-payment-button.enum";
 import { StoreService } from "../../services/store.service";
 import { SafePaymentFormField } from "./enums/safe-payment-form-field.enum";
-import { NgService } from "../../services";
 import { SafePaymentFormService } from "./safe-payment-form.service";
 import { SafePaymentService } from "./services/safe-payment.service";
 import { tap } from "rxjs/operators";
@@ -45,7 +44,6 @@ export class SafePaymentComponent {
         private dialogRef: DialogRefService<SafePaymentButton>,
         private router: Router,
         private formService: SafePaymentFormService,
-        private ngService: NgService,
         private safePaymentService: SafePaymentService
     ) {
         this.stateManager.state = SafePayStates.ShowAgenda;
@@ -53,12 +51,8 @@ export class SafePaymentComponent {
 
     doSafePay(): void {
         this.dialogRef.close(SafePaymentButton.DoPay);
-        this.ngService.hideSmbDocuments();
         this.store.isIssueVissible = true;
         this.router.navigateByUrl(paths[Page.ACCREDITATION_AMOUNT]);
-        setTimeout(() => {
-            this.ngService.scrollToTop();
-        }, 200);
     }
 
     closeDialog(payButton: SafePaymentButton = SafePaymentButton.OrdinalPay): void {

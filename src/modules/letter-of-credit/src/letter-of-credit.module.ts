@@ -13,7 +13,6 @@ import { StorageService } from './services/storage.service';
 import { PsbModule } from './modules/psb/psb.module';
 import { StoreService } from './services/store.service';
 import { AccountService } from './services/account.service';
-import { NgService } from './services/ng.service';
 import { SafePaymentModule } from './modules/safepayment/safe-payment.module';
 import { UiKitModule } from './modules/ui-kit/ui-kit.module';
 import { MaterialModule } from './modules/material/material-module';
@@ -44,7 +43,6 @@ registerLocaleData(ru);
         StoreService,
         AccountService,
         ErrorHandlerService,
-        NgService,
         SafePaymentStateManagerService,
         LetterOfCreditService,
     ],

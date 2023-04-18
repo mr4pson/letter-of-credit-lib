@@ -6,7 +6,7 @@ import { StepService } from './services/step.service';
 
 import { ButtonType } from '@psb/fe-ui-kit/src/components/button';
 import { takeUntilDestroyed, UntilDestroy } from '@psb/angular-tools';
-import { NgService, StoreService } from '../../services';
+import { StoreService } from '../../services';
 
 @Component({
     selector: 'loc-issue',
@@ -23,7 +23,6 @@ export class IssueComponent implements OnInit {
     constructor(
         private router: Router,
         private stepService: StepService,
-        private ngService: NgService,
         private store: StoreService,
     ) { }
 
@@ -39,7 +38,6 @@ export class IssueComponent implements OnInit {
     navigateBack(): void {
         if (this.currentUrl === this.steps[0].url) {
             this.store.isIssueVissible = false;
-            // this.ngService.showSmbDocuments();
 
             return;
         }

@@ -9,14 +9,13 @@ import { StepService } from './services/step.service';
 import { PsbModule } from '../psb/psb.module';
 import { IssueStepsComponent } from './components/issue-steps/issue-steps.component';
 
-import { NgService, StoreService } from '../../services';
+import { StoreService } from '../../services';
 
 describe('IssueComponent', () => {
     let component: IssueComponent;
     let fixture: ComponentFixture<IssueComponent>;
     let location: Location;
     let router: Router;
-    let ngService: NgService;
 
     beforeEach(waitForAsync(() => {
         const mockStore = {
@@ -35,10 +34,6 @@ describe('IssueComponent', () => {
             providers: [
                 StepService,
                 {
-                    provide: NgService,
-                    useValue: jasmine.createSpyObj('NgService', ['showSmbDocuments']),
-                },
-                {
                     provide: StoreService,
                     useValue: mockStore,
                 },
@@ -51,7 +46,6 @@ describe('IssueComponent', () => {
         location = TestBed.inject(Location);
         fixture = TestBed.createComponent(IssueComponent);
         component = fixture.componentInstance;
-        ngService = TestBed.inject(NgService);
 
         fixture.detectChanges();
         router.initialNavigation();
@@ -73,14 +67,5 @@ describe('IssueComponent', () => {
         component.navigateBack();
 
         expect(router.navigateByUrl).toHaveBeenCalledWith(component.steps[0].url);
-    });
-
-    it('При навигации на первый шаг вызывает showSmbDocuments', () => {
-        ngService = TestBed.inject(NgService);
-        component.currentUrl = component.steps[0].url;
-
-        component.navigateBack();
-
-        expect(ngService.showSmbDocuments).toHaveBeenCalled();
     });
 });
