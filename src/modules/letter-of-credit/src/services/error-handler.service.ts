@@ -1,13 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandler, Injectable } from '@angular/core';
 
-import { ErrorMessage } from '../enums/error-messages.enum';
-import { SmbAlertingService } from '../interfaces';
 import { NotificationService } from '../modules/ui-kit/components/notification/notification.service';
 
 @Injectable()
 export class ErrorHandlerService implements ErrorHandler {
-    alertingService: SmbAlertingService | NotificationService = this.notificationService;
+    alertingService: NotificationService = this.notificationService;
 
     constructor(
         private notificationService: NotificationService,
@@ -15,7 +13,7 @@ export class ErrorHandlerService implements ErrorHandler {
         this.injectHandler(this.notificationService);
     }
 
-    injectHandler(alertingService: SmbAlertingService | NotificationService) {
+    injectHandler(alertingService: NotificationService) {
         this.alertingService = alertingService;
     }
 

@@ -12,17 +12,12 @@ import {
     IBaseDialogData,
 } from "@psb/fe-ui-kit";
 import { StoreService } from "../../../../services/store.service";
-import { NgService } from "../../../../services/ng.service";
 import { isFormValid } from "../../../../utils";
 import { SuccessModalComponent } from "../success-modal/success-modal.component";
-import { smbPaths } from '../../../../constants/smp-paths.constant';
-import { SmbPage } from "../../../../enums/smb-page.enum";
 import { ErrorHandlerService, StorageService } from "../../../../services";
 import { LetterService } from "../../../../api/services";
-import moment from "moment";
 import { FileUploadService } from "../../services/file-upload.service";
 import { toBase64 } from "../../../../utils/to-base64";
-import { getNdsSum } from "./helpers";
 import { takeUntilDestroyed, UntilDestroy } from "@psb/angular-tools";
 import { ApplicationFile } from "../../interfaces/application-file.inteface";
 
@@ -42,7 +37,6 @@ export class SendApplicationComponent implements OnInit {
     constructor(
         private store: StoreService,
         private storageService: StorageService,
-        private ngService: NgService,
         private formService: SendApplicationFormService,
         private dialogService: DialogService,
         private letterService: LetterService,
@@ -146,12 +140,6 @@ export class SendApplicationComponent implements OnInit {
             .pipe(
                 tap(() => {
                     this.store.isIssueVissible = false;
-                    this.ngService.showSmbDocuments();
-                    const smbApp = this.ngService.getSmbAppComponent();
-
-                    if (smbApp) {
-                        smbApp.router.navigateByUrl(smbPaths[SmbPage.Documents]);
-                    }
                 }),
                 takeUntilDestroyed(this)
             )

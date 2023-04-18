@@ -12,7 +12,7 @@ __ivy_ngcc__
 /node_modules
 
 #open-api codegen
-src/modules/letter-of-credit/src/api
+# src/modules/letter-of-credit/src/api
 
 # profiling files
 chrome-profiler-events*.json

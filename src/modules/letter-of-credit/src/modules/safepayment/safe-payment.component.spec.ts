@@ -14,7 +14,7 @@ import { SafePaymentEmailComponent } from './components/safe-payment-email/safe-
 import { SafePayStates } from './enums/safe-payment.enum';
 import { Page, paths } from '../issue/constants/routes';
 
-import { ErrorHandlerService, NgService, StoreService } from '../../services';
+import { ErrorHandlerService, StoreService } from '../../services';
 import { SafePaymentButton } from '../../enums/safe-payment-button.enum';
 import { ReceiverStatus } from '../../enums/receiver-status.enum';
 import {
@@ -54,7 +54,6 @@ describe('SafePaymentComponent', () => {
                 StoreService,
                 SafePaymentStateManagerService,
                 SafePaymentFormService,
-                NgService,
                 NotificationService,
                 ErrorHandlerService,
                 {
