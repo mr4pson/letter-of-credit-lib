@@ -12,7 +12,7 @@
 
         psb-checkbox {
             display: inline-block;
-            width: 530px;
+            max-width: 550px;
         }
     }
 
@@ -28,7 +28,8 @@
     }
 
     .submit {
-        margin-top: $size-20;
+        display: inline-block;
+        margin-top: $size-24;
     }
 }
 

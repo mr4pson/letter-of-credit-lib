@@ -10,7 +10,7 @@
 
 body,
 * {
-    font-family: $inter;
+    font-family: $roboto;
 }
 
 .loc-backdrop {
@@ -155,4 +155,37 @@ psb-calendar header.header {
 
 psb-dialog-header-with-close-icon {
     width: auto !important;
+}
+
+input.psb-input {
+    font-family: $roboto!important;
+}
+
+.checkbox-container > .checkbox-caption {
+    font-family: $roboto!important;
+}
+
+.heading-1 {
+    font-family: $roboto!important;
+}
+
+.heading-4 {
+    font-family: $roboto!important;
+}
+
+psb-dialog-title {
+    margin-top: -80px;
+    margin-bottom: 45px;
+    border-bottom: 1px dashed #ccc;
+    padding: 25px 48px!important;
+}
+
+psb-dialog-header-with-close-icon {
+    padding: 30px 24px!important;
+    position: relative;
+    z-index: 10;
+}
+
+psb-simple-dialog psb-dialog-container {
+    padding-bottom: 20px !important;
 }
