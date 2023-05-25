@@ -1,8 +1,8 @@
 export enum ReliableSign {
-    reliableRed = 'red',
+    reliableRed = '#FF3F33',
     reliableRedText = 'низкий',
-    reliableYellow = 'yellow',
+    reliableYellow = '#FFD954',
     reliableYellowText = 'средний',
-    reliableGray = 'gray',
+    reliableGray = '#808080',
     reliableGrayText = 'неизвестный',
 }

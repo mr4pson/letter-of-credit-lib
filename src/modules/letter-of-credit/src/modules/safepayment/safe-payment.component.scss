@@ -6,7 +6,7 @@
     align-items: center;
     height: $size-24;
     padding-bottom: 28px;
-    color: rgba(0, 0, 0, 0.6);
+    color: $black-alpha-60;
 
     .title {
         display: inline-block;
@@ -41,8 +41,8 @@
     }
 }
 
-p {
-    color: rgba(0, 0, 0, 0.6);
+.safe-payment-desc {
+    color: $black-alpha-60;
 }
 
 .actions {
@@ -50,7 +50,7 @@ p {
     justify-content: space-between;
     margin: 40px 0 30px 0;
     gap: 10px;
-    color: rgba(0, 0, 0, 0.6);
+    color: $black-alpha-60;
 }
 
 .email-link {

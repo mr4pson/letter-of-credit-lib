@@ -23,7 +23,7 @@
         font-size: $font-size-xs;
         line-height: 36px;
         letter-spacing: 1.5px;
-        font-family: $roboto;
+        font-family: $inter;
         color: $bg-grey-light-dark;
         margin-bottom: 10px;
     }
@@ -68,14 +68,14 @@
 
     .title {
         font-size: $font-size-s;
-        font-family: $roboto;
+        font-family: $inter;
         line-height: 36px;
         margin-bottom: -2px;
         color: $bg-grey-light-dark;
     }
 
     .description {
-        font-family: $roboto;
+        font-family: $inter;
         white-space: nowrap;
         overflow: hidden;
         font-size: $font-size-xs;

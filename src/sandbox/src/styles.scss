@@ -10,7 +10,7 @@
 
 body,
 * {
-    font-family: $roboto;
+    font-family: $inter;
 }
 
 .loc-backdrop {
@@ -158,30 +158,30 @@ psb-dialog-header-with-close-icon {
 }
 
 input.psb-input {
-    font-family: $roboto!important;
+    font-family: $inter !important;
 }
 
-.checkbox-container > .checkbox-caption {
-    font-family: $roboto!important;
+.checkbox-container>.checkbox-caption {
+    font-family: $inter !important;
 }
 
 .heading-1 {
-    font-family: $roboto!important;
+    font-family: $inter !important;
 }
 
 .heading-4 {
-    font-family: $roboto!important;
+    font-family: $inter !important;
 }
 
 psb-dialog-title {
     margin-top: -80px;
     margin-bottom: 45px;
     border-bottom: 1px dashed #ccc;
-    padding: 25px 48px!important;
+    padding: 25px 48px !important;
 }
 
 psb-dialog-header-with-close-icon {
-    padding: 30px 24px!important;
+    padding: 30px 24px !important;
     position: relative;
     z-index: 10;
 }
