@@ -126,7 +126,7 @@ describe('CounterpartyComponent', () => {
         expect(component.clientCompanyName).toEqual(client.shortName);
     });
 
-    it('При изменении ИНН получает список клиентов', (done: DoneFn) => {
+    it('При изменении ИНН получает список клиентов', (done) => {
         component.clients$.subscribe((clients) => {
             if (clients.length === 0) {
                 return;
@@ -142,7 +142,7 @@ describe('CounterpartyComponent', () => {
     });
 
     it('Вызывает handleSubmit при сабмите формы', () => {
-        spyOn(component, 'handleSubmit');
+        jest.spyOn(component, 'handleSubmit');
         clickSubmitButton(fixture);
 
         expect(component.handleSubmit).toHaveBeenCalled();
@@ -151,7 +151,7 @@ describe('CounterpartyComponent', () => {
     it('Редиректит к маршруту counterparty contract при валидной форме', () => {
         component.form.patchValue(initialForm);
 
-        spyOn(router, 'navigateByUrl');
+        jest.spyOn(router, 'navigateByUrl');
         clickSubmitButton(fixture);
 
         expect(isFormValid(component.form)).toBeTruthy();

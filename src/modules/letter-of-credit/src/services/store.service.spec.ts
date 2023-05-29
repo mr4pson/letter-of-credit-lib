@@ -17,17 +17,15 @@ describe('StoreService', () => {
         service = TestBed.inject(StoreService);
     });
 
-    it('Восстанавливет дефолтный состояние стора', () => {
+    it('Восстанавливает дефолтное состояние стора', () => {
         service.clientEmail = 'test';
         service.receiverStatus = ReceiverStatus.Reliable;
         service.letterOfCredit.allowUsePartOfLoc = false;
-        service.isIssueVissible = true;
 
         service.restoreDefaultState();
 
         expect(service.clientEmail).toEqual('');
         expect(service.receiverStatus).toEqual(ReceiverStatus.Unknown);
         expect(service.letterOfCredit).toEqual(DEFAULT_LOC_INSTANCE);
-        expect(service.isIssueVissible).toBeFalsy();
     });
 });

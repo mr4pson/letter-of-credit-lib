@@ -1,10 +1,7 @@
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import ru from '@angular/common/locales/ru';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { LetterOfCreditComponent } from './letter-of-credit.component';
 import { IssueModule } from './modules/issue/issue.module';
 import { HttpErrorInterceptor } from './http-error.interceptor';
@@ -19,7 +16,8 @@ import { MaterialModule } from './modules/material/material-module';
 import { SafePaymentStateManagerService } from './modules/safepayment/services/safe-payment-state-manager.service';
 import { ApiModule } from './api/api.module';
 import { ApiConfigurationParams } from './api/api-configuration';
-import { LetterOfCreditService } from './letter-of-credit.service';
+import { RouterModule } from '@angular/router';
+import { LetterOfCreditRoutingModule } from './letter-of-credit.routing.module';
 
 registerLocaleData(ru);
 @NgModule({
@@ -28,13 +26,13 @@ registerLocaleData(ru);
     ],
     imports: [
         ApiModule.forRoot({ rootUrl: '' } as ApiConfigurationParams),
-        BrowserModule,
-        BrowserAnimationsModule,
         PsbModule,
+        CommonModule,
         MaterialModule,
         UiKitModule,
-        IssueModule,
         SafePaymentModule,
+        RouterModule,
+        LetterOfCreditRoutingModule,
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'ru' },
@@ -44,10 +42,8 @@ registerLocaleData(ru);
         AccountService,
         ErrorHandlerService,
         SafePaymentStateManagerService,
-        LetterOfCreditService,
     ],
     exports: [
-        LetterOfCreditComponent,
         PsbModule,
         MaterialModule,
         UiKitModule,

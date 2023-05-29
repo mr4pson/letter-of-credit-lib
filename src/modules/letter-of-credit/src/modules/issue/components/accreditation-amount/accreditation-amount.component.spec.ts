@@ -115,7 +115,6 @@ describe('AccreditationAmountComponent', () => {
     }));
 
     it('Задает первый аккаунт после получения списка аккаунтов', fakeAsync(() => {
-        store.isIssueVissible = true;
         accounts$$.next(accounts);
         tick();
 

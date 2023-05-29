@@ -39,7 +39,7 @@ describe('SafePaymentEmailComponent', () => {
     });
 
     it('Вызывает takeEmail при клике на кнопку "Получить материалы"', () => {
-        spyOn(component, 'takeEmail');
+        jest.spyOn(component, 'takeEmail');
         emailButtonClick(fixture);
 
         expect(component.takeEmail).toHaveBeenCalled();
@@ -49,7 +49,7 @@ describe('SafePaymentEmailComponent', () => {
         const testEmail = 'test@mail.ru';
         component.emailFormControl.patchValue('test@mail.ru');
 
-        spyOn(component.takeValidEmail, 'emit');
+        jest.spyOn(component.takeValidEmail, 'emit');
         emailButtonClick(fixture);
 
         expect(component.takeValidEmail.emit).toHaveBeenCalledWith(testEmail);

@@ -2,20 +2,20 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray } from '@angular/forms';
 
 import { filter } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
-import { ClosingDoc } from '../../interfaces/closing-doc.interface';
 import { Page, paths } from '../../constants/routes';
+import { AccreditationPeriodFormField } from '../../enums/accreditation-period-form-field.enum';
+import { ClosingDoc } from '../../interfaces/closing-doc.interface';
 import { StepService } from '../../services/step.service';
 import { AccreditationPeriodFormService } from './accreditation-period-form.service';
-import { AccreditationPeriodFormField } from '../../enums/accreditation-period-form-field.enum';
 
+import { UntilDestroy, takeUntilDestroyed } from '@psb/angular-tools';
 import { ButtonType } from '@psb/fe-ui-kit';
-import { StoreService } from '../../../../services/store.service';
-import { getSubstractDatesDays, getSummedDateDays, getTomorrowDate } from '../../../../utils/utils';
 import moment from 'moment';
+import { LetterOfCreditService } from '../../../../letter-of-credit.service';
+import { StoreService } from '../../../../services/store.service';
 import { isFormValid } from '../../../../utils';
-import { takeUntilDestroyed, UntilDestroy } from '@psb/angular-tools';
+import { getSubstractDatesDays, getSummedDateDays, getTomorrowDate } from '../../../../utils/utils';
 import { ruLocaleDateConfig } from '../../constants/constants';
 
 @Component({
@@ -35,9 +35,9 @@ export class AccreditationPeriodComponent implements OnInit {
 
     constructor(
         private store: StoreService,
-        private router: Router,
         private stepService: StepService,
         private formService: AccreditationPeriodFormService,
+        private letterOfCreditService: LetterOfCreditService
     ) {
         this.closingDocsControl = this.formService.closingDocsControl;
     }
@@ -103,7 +103,7 @@ export class AccreditationPeriodComponent implements OnInit {
                 paths[Page.ACCREDITATION_PERIOD],
                 stepDescription,
             );
-            this.router.navigateByUrl(paths[Page.SEND_APPLICATION]);
+            this.letterOfCreditService.navigate(paths[Page.SEND_APPLICATION]);
         }
     }
 
@@ -155,7 +155,7 @@ export class AccreditationPeriodComponent implements OnInit {
     private setStoreClosingDocs(closingDocs: ClosingDoc[]): void {
         this.store.letterOfCredit.closingDocs = [];
         closingDocs.forEach((closingDoc: ClosingDoc) => {
-            if (!closingDoc.document?.trim()) {
+            if (typeof closingDoc.document !== 'undefined' && !closingDoc.document?.trim()) {
 
                 return;
             }

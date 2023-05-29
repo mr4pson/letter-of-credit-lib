@@ -1,21 +1,22 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { EMPTY, Observable, merge, of } from 'rxjs';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
-import { EMPTY, merge, Observable, of } from 'rxjs';
-import { Router } from '@angular/router';
 
-import { PartnersService } from '../../services/partners.service';
+import { Page, paths } from '../../constants/routes';
+import { CounterpartyFormField } from '../../enums/counterparty-form-field.enum';
 import { Client } from '../../interfaces/client.interface';
 import { Partner } from '../../interfaces/partner.interface';
-import { Page, paths } from '../../constants/routes';
+import { PartnersService } from '../../services/partners.service';
 import { StepService } from '../../services/step.service';
 import { CounterpartyFormService } from './counterparty-form.service';
-import { CounterpartyFormField } from '../../enums/counterparty-form-field.enum';
 
-import { AccountService } from '../../../../services/account.service';
-import { BankSearch } from '../../../../interfaces/api/bank-search.interface';
+import { UntilDestroy, takeUntilDestroyed } from '@psb/angular-tools';
 import { ButtonType } from '@psb/fe-ui-kit';
-import { StoreService } from '../../../../services/store.service';
+import { BankSearch } from '../../../../interfaces/api/bank-search.interface';
+import { LetterOfCreditService } from '../../../../letter-of-credit.service';
+import { AccountService } from '../../../../services/account.service';
 import { ErrorHandlerService } from '../../../../services/error-handler.service';
+import { StoreService } from '../../../../services/store.service';
 import { isFormValid } from '../../../../utils';
 import {
     BANK_NOT_DEFINED_CONTROL_MESSAGE,
@@ -23,7 +24,6 @@ import {
     GET_CLIENT_LIST_ERROR_MESSAGE,
     GET_PARTER_LIST_ERROR_MESSAGE
 } from './constants';
-import { takeUntilDestroyed, UntilDestroy } from '@psb/angular-tools';
 
 @Component({
     selector: 'counterparty',
@@ -48,8 +48,8 @@ export class СounterpartyComponent implements OnInit {
         private partnersService: PartnersService,
         private errorHandlerService: ErrorHandlerService,
         private stepService: StepService,
-        private router: Router,
         private formService: CounterpartyFormService,
+        private letterOfCreditService: LetterOfCreditService
     ) {
         this.initObservables();
     }
@@ -171,7 +171,7 @@ export class СounterpartyComponent implements OnInit {
                 paths[Page.COUNTERPARTY],
                 this.store.letterOfCredit.receiverBankName,
             );
-            this.router.navigateByUrl(paths[Page.COUNTERPARTY_CONTRACT]);
+            this.letterOfCreditService.navigate(paths[Page.COUNTERPARTY_CONTRACT]);
         }
     }
 }

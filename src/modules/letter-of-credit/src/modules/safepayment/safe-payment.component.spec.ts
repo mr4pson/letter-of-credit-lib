@@ -3,18 +3,18 @@ import '@angular/common/locales/global/ru';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { SafePaymentComponent } from './safe-payment.component';
 import { SafePaymentStateManagerService } from './services/safe-payment-state-manager.service';
-import { SafePaymentFormService } from './safe-payment-form.service';
+import { SafePaymentFormService } from './services/safe-payment-form.service';
 import { PsbModule } from '../psb/psb.module';
 import { SafePaymentAgendaComponent } from './components/safe-paymet-agenda/safe-payment-agenda.component';
 import { SafePaymentEmailComponent } from './components/safe-payment-email/safe-payment-email.component';
 import { SafePayStates } from './enums/safe-payment.enum';
 import { Page, paths } from '../issue/constants/routes';
 
-import { ErrorHandlerService, StoreService } from '../../services';
+import { AccountService, ErrorHandlerService, StorageService, StoreService } from '../../services';
 import { SafePaymentButton } from '../../enums/safe-payment-button.enum';
 import { ReceiverStatus } from '../../enums/receiver-status.enum';
 import {
@@ -24,7 +24,8 @@ import {
 import { NotificationService } from '../ui-kit/components/notification/notification.service';
 import { DialogRefService } from '@psb/fe-ui-kit';
 import { SafePaymentService } from './services/safe-payment.service';
-import { ReliableColorPipe, ReliableTextPipe } from './pipes';
+import { ReliableClassPipe, ReliableTextPipe } from './pipes';
+import { AccreditationAmountComponent } from '../issue/components/accreditation-amount/accreditation-amount.component';
 
 describe('SafePaymentComponent', () => {
     let component: SafePaymentComponent;
@@ -33,6 +34,7 @@ describe('SafePaymentComponent', () => {
     let safePaymentStateManager: SafePaymentStateManagerService;
     let dialogRef: DialogRefService<SafePaymentButton>;
     let router: Router;
+    let route: ActivatedRoute;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -41,13 +43,15 @@ describe('SafePaymentComponent', () => {
                 SafePaymentAgendaComponent,
                 SafePaymentEmailComponent,
 
-                ReliableColorPipe,
+                ReliableClassPipe,
                 ReliableTextPipe,
             ],
             imports: [
                 CommonModule,
                 PsbModule,
-                RouterTestingModule,
+                RouterTestingModule.withRoutes(
+                    [{ path: paths[Page.ACCREDITATION_AMOUNT], component: AccreditationAmountComponent }]
+                ),
                 ReactiveFormsModule,
             ],
             providers: [
@@ -56,6 +60,8 @@ describe('SafePaymentComponent', () => {
                 SafePaymentFormService,
                 NotificationService,
                 ErrorHandlerService,
+                AccountService,
+                StorageService,
                 {
                     provide: DialogRefService,
                     useValue: {
@@ -74,6 +80,7 @@ describe('SafePaymentComponent', () => {
         safePaymentStateManager = TestBed.inject(SafePaymentStateManagerService);
         dialogRef = TestBed.inject(DialogRefService);
         router = TestBed.inject(Router);
+        route = TestBed.inject(ActivatedRoute);
         store.receiverStatus = ReceiverStatus.Unknown;
 
         fixture.detectChanges();
@@ -88,30 +95,30 @@ describe('SafePaymentComponent', () => {
     });
 
     it('При клике на кнопку "Показать email" вызывает showEmail', () => {
-        spyOn(component, 'showEmail');
+        jest.spyOn(component, 'showEmail');
         clickEmailLink(fixture);
 
         expect(component.showEmail).toHaveBeenCalled();
     });
 
     it('Закрывает диалоговое окно при клике на кнопку "Совершить безопасный платёж" c параметром DoPay и редиректит к accredit amount', () => {
-        spyOn(dialogRef, 'close');
-        spyOn(router, 'navigateByUrl');
+        jest.spyOn(dialogRef, 'close');
+        jest.spyOn(router, 'navigateByUrl');
         clickNthPaymentBtn(fixture, 1);
 
         expect(dialogRef.close).toHaveBeenCalledWith(SafePaymentButton.DoPay);
-        expect(router.navigateByUrl).toHaveBeenCalledWith(paths[Page.ACCREDITATION_AMOUNT]);
+        expect(router.navigateByUrl).toHaveBeenCalledWith(`${route.snapshot.url}/${paths[Page.ACCREDITATION_AMOUNT]}`);
     });
 
     it('Закрывает диалоговое окно при клике на кнопку "Отказаться от платежа" c параметром RefusePay', () => {
-        spyOn(dialogRef, 'close');
+        jest.spyOn(dialogRef, 'close');
         clickNthPaymentBtn(fixture, 2);
 
         expect(dialogRef.close).toHaveBeenCalledWith(SafePaymentButton.RefusePay);
     });
 
     it('Закрывает диалоговое окно при клике на кнопку "Отправить обычный платёж" c параметром OrdinalPay', () => {
-        spyOn(dialogRef, 'close');
+        jest.spyOn(dialogRef, 'close');
         clickNthPaymentBtn(fixture, 3);
 
         expect(dialogRef.close).toHaveBeenCalledWith(SafePaymentButton.OrdinalPay);

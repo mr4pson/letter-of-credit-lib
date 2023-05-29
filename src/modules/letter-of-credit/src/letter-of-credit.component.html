@@ -1,7 +1,4 @@
-<div
-    [class.main-layout--hidden]="!(isIssueVissible$ | async)"
-    class="main-layout"
->
-    <loc-issue></loc-issue>
+<div class="main-layout">
+    <router-outlet></router-outlet>
 </div>
 <loc-notification></loc-notification>

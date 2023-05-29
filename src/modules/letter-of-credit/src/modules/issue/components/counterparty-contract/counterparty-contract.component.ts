@@ -1,23 +1,23 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { tap } from 'rxjs/operators';
-import { merge } from 'rxjs';
 import { NgxDropzoneChangeEvent } from 'ngx-dropzone';
-import { Router } from '@angular/router';
+import { merge } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { NDS_LIST, ruLocaleDateConfig } from '../../constants/constants';
-import { FileUploadService } from '../../services/file-upload.service';
-import { FileUploaded } from '../../interfaces/file-uploaded.interface';
 import { Page, paths } from '../../constants/routes';
-import { StepService } from '../../services/step.service';
 import { CounterpartyContractFormField } from '../../enums/counterparty-contract-form-field.enum';
+import { FileUploaded } from '../../interfaces/file-uploaded.interface';
+import { FileUploadService } from '../../services/file-upload.service';
+import { StepService } from '../../services/step.service';
 
+import { takeUntilDestroyed, UntilDestroy } from '@psb/angular-tools';
 import { ButtonType } from '@psb/fe-ui-kit/src/components/button';
 import { SelectedItem } from '@psb/fe-ui-kit/src/components/input-select';
 import { SimplebarAngularComponent } from 'simplebar-angular/lib/simplebar-angular.component';
+import { LetterOfCreditService } from '../../../../letter-of-credit.service';
 import { StoreService } from '../../../../services/store.service';
 import { isFormValid } from '../../../../utils';
 import { CounterpartyContractFormService } from './counterparty-contract-form.service';
-import { takeUntilDestroyed, UntilDestroy } from '@psb/angular-tools';
 
 @Component({
     selector: 'counterparty-contract',
@@ -39,9 +39,9 @@ export class CounterpartyContractComponent implements OnInit {
     constructor(
         private store: StoreService,
         private fileUploadService: FileUploadService,
-        private router: Router,
         private stepService: StepService,
         private formService: CounterpartyContractFormService,
+        private letterOfCreditService: LetterOfCreditService
     ) { }
 
     ngOnInit(): void {
@@ -129,7 +129,7 @@ export class CounterpartyContractComponent implements OnInit {
                 paths[Page.COUNTERPARTY_CONTRACT],
                 stepDescription,
             );
-            this.router.navigateByUrl(paths[Page.ACCREDITATION_PERIOD]);
+            this.letterOfCreditService.navigate(paths[Page.ACCREDITATION_PERIOD]);
         }
     }
 }

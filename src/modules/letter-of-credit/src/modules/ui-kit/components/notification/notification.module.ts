@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { } from '@angular/platform-browser';
 
 import { NotificationService } from './notification.service';
 import { NotificationComponent } from './notification.component';
@@ -14,8 +13,6 @@ import { PsbModule } from '../../../psb/psb.module';
     ],
     imports: [
         CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
         PsbModule,
     ],
     providers: [

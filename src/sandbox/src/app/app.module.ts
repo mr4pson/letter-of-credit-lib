@@ -1,27 +1,49 @@
 import { registerLocaleData } from '@angular/common';
 import ru from '@angular/common/locales/ru';
 import { ApplicationRef, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { createInputTransfer, createNewHosts, removeNgStyles } from '@angularclass/hmr';
 
-import { AppComponent } from './app.component';
-import { LetterOfCreditModule, LetterOfCreditService } from '@psb/letter-of-credit';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { LetterOfCreditService } from '@psb/letter-of-credit';
+import { PsbModule } from 'src/modules/letter-of-credit/src/modules/psb/psb.module';
+import { UiKitModule } from 'src/modules/letter-of-credit/src/modules/ui-kit/ui-kit.module';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing.module';
+import { CreatePaymentComponent } from './components/create-payment/create-payment.component';
+import { LayoutComponent } from './components/layout/layout.component';
+
+import { AccountService, ErrorHandlerService, StorageService, StoreService } from 'src/modules/letter-of-credit/src/services';
+import { SafePaymentFormService, SafePaymentService, SafePaymentStateManagerService } from 'src/modules/letter-of-credit/src/modules/safepayment/services';
 
 registerLocaleData(ru);
 @NgModule({
     declarations: [
         AppComponent,
+        CreatePaymentComponent,
+        LayoutComponent,
     ],
     imports: [
-        BrowserModule,
+        AppRoutingModule,
         BrowserAnimationsModule,
-        LetterOfCreditModule,
         ReactiveFormsModule,
+        RouterModule,
+
+        PsbModule,
+        UiKitModule,
     ],
     providers: [
         LetterOfCreditService,
+
+        StorageService,
+        StoreService,
+        AccountService,
+        ErrorHandlerService,
+
+        SafePaymentFormService,
+        SafePaymentService,
+        SafePaymentStateManagerService,
     ],
     bootstrap: [AppComponent],
 })

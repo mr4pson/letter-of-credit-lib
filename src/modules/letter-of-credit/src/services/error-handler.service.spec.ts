@@ -8,7 +8,7 @@ describe('ErrorHandlerService', () => {
     let notificationService: NotificationService;
 
     beforeEach(() => {
-        spyOn(ErrorHandlerService.prototype, 'injectHandler');
+        jest.spyOn(ErrorHandlerService.prototype, 'injectHandler');
 
         TestBed.configureTestingModule({
             providers: [
@@ -31,7 +31,7 @@ describe('ErrorHandlerService', () => {
     });
 
     it('Вызывает addError при showErrorMessage', () => {
-        spyOn(service.alertingService, 'addError');
+        jest.spyOn(service.alertingService, 'addError');
 
         service.showErrorMessage('Test');
 

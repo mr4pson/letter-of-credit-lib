@@ -1,8 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import { AccreditationAmountComponent } from './components/accreditation-amount/accreditation-amount.component';
@@ -33,6 +31,9 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 import { CurrentStepNumberPipe } from './pipes/current-step-number.pipe';
 import { MoneyAmountPipe } from '@psb/angular-tools';
 import { AccountService } from '../../services';
+import { CommonModule } from '@angular/common';
+import { IssueLayoutComponent } from './components/issue-layout/issue-layout.component';
+import { LetterOfCreditService } from '../../letter-of-credit.service';
 
 @NgModule({
     declarations: [
@@ -46,19 +47,19 @@ import { AccountService } from '../../services';
         AccreditationAmountComponent,
         CounterpartyContractComponent,
         SuccessModalComponent,
+        IssueLayoutComponent,
 
         CurrentStepNumberPipe,
     ],
     imports: [
         PsbModule,
         UiKitModule,
-        BrowserModule,
         HttpClientModule,
         NgxDropzoneModule,
         IssueRoutingModule,
         ReactiveFormsModule,
         SimplebarAngularModule,
-        BrowserAnimationsModule,
+        CommonModule,
     ],
     exports: [
         IssueComponent,

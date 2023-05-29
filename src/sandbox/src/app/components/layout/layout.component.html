@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="buttons-wrapper">
+        <psb-button
+            [isSubmit]="true"
+            (buttonClick)="handleLetterOfCreditShow()"
+        >
+            Новый покрытый акредитив
+        </psb-button>
+        <psb-button
+            [isSubmit]="true"
+            (buttonClick)="handleNewPaymentClick()"
+        >
+            Новый платеж
+        </psb-button>
+    </div>
+</div>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

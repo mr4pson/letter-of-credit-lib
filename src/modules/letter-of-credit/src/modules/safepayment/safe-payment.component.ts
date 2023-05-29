@@ -3,22 +3,21 @@ import {
     Component,
     ViewChild,
 } from "@angular/core";
-import { Router } from "@angular/router";
 
 import { Page, paths } from "../issue/constants/routes";
-import { SafePayStates } from "./enums/safe-payment.enum";
 import { SafePaymentEmailComponent } from "./components/safe-payment-email/safe-payment-email.component";
-import { SafePaymentStateManagerService } from "./services/safe-payment-state-manager.service";
+import { SafePayStates } from "./enums/safe-payment.enum";
+import { SafePaymentStateManagerService } from "./services";
 
+import { UntilDestroy, takeUntilDestroyed } from "@psb/angular-tools";
 import { DialogRefService } from "@psb/fe-ui-kit";
 import { ButtonSize, ButtonType } from "@psb/fe-ui-kit/src/components/button";
+import { tap } from "rxjs/operators";
 import { SafePaymentButton } from "../../enums/safe-payment-button.enum";
+import { LetterOfCreditService } from '../../letter-of-credit.service';
 import { StoreService } from "../../services/store.service";
 import { SafePaymentFormField } from "./enums/safe-payment-form-field.enum";
-import { SafePaymentFormService } from "./safe-payment-form.service";
-import { SafePaymentService } from "./services/safe-payment.service";
-import { tap } from "rxjs/operators";
-import { takeUntilDestroyed, UntilDestroy } from "@psb/angular-tools";
+import { SafePaymentFormService, SafePaymentService } from "./services";
 
 @Component({
     selector: "safe-payment",
@@ -42,17 +41,17 @@ export class SafePaymentComponent {
         public stateManager: SafePaymentStateManagerService,
         public store: StoreService,
         private dialogRef: DialogRefService<SafePaymentButton>,
-        private router: Router,
         private formService: SafePaymentFormService,
-        private safePaymentService: SafePaymentService
+        private safePaymentService: SafePaymentService,
+        private letterOfCreditService: LetterOfCreditService
+
     ) {
         this.stateManager.state = SafePayStates.ShowAgenda;
     }
 
     doSafePay(): void {
         this.dialogRef.close(SafePaymentButton.DoPay);
-        this.store.isIssueVissible = true;
-        this.router.navigateByUrl(paths[Page.ACCREDITATION_AMOUNT]);
+        this.letterOfCreditService.navigate(paths[Page.ACCREDITATION_AMOUNT]);
     }
 
     closeDialog(payButton: SafePaymentButton = SafePaymentButton.OrdinalPay): void {
@@ -60,7 +59,7 @@ export class SafePaymentComponent {
     }
 
     takeEmail(email: string): void {
-        if (email.trim() === "") {
+        if (email?.trim() === "") {
             return;
         }
 

@@ -6,11 +6,11 @@ import { By } from '@angular/platform-browser';
 
 import { AccountSelectComponent } from './account-select.component';
 
-import { PsbModule } from 'src/app/modules/psb/psb.module';
-import { ClientAccount } from 'src/app/modules/issue/interfaces/client-account.interface';
 import { ClickOutsideModule } from '@psb/angular-tools';
 import { clickHeader, clickOutside, getItemsWrapper } from './testing.utils';
 import { FormErrorPipe } from '../../pipes/form-error.pipe';
+import { ClientAccount } from '../../../issue/interfaces/client-account.interface';
+import { PsbModule } from '../../../psb/psb.module';
 
 enum AccountSelectFormField {
     Account = "account"

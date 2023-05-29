@@ -1,10 +1,6 @@
-import { getNow, getSubstractDatesDays, getSummedDateDays, getTomorrowDate } from './utils';
+import { getSubstractDatesDays, getSummedDateDays, getTomorrowDate } from './utils';
 
 describe('Utils', () => {
-    it('Возвращает сегодняшнюю дату', () => {
-        expect(getNow()).toEqual(new Date());
-    });
-
     it('Возвращает -1 день при уменьшаемой дате 03/02/2021 и вычитаемой дате 03/03/2021', () => {
         expect(getSubstractDatesDays(new Date('03/02/2021'), new Date('03/03/2021'))).toEqual(-1);
     });

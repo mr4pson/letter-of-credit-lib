@@ -38,6 +38,6 @@ export class SafePaymentEmailComponent {
             return;
         }
 
-        this.takeValidEmail.emit(this.emailFormControl.value.toString().trim());
+        this.takeValidEmail.emit(this.emailFormControl.value.toString()?.trim());
     }
 }

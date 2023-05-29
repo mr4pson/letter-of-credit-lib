@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PsbModule } from '../psb/psb.module';
 import { AccountSelectComponent } from './components/account-select/account-select.component';
@@ -17,8 +15,6 @@ import { FormErrorPipe } from './pipes/form-error.pipe';
         FormErrorPipe,
     ],
     imports: [
-        BrowserAnimationsModule,
-        BrowserModule,
         ClickOutsideModule,
         CommonModule,
         NotificationModule,
@@ -26,6 +22,7 @@ import { FormErrorPipe } from './pipes/form-error.pipe';
     ],
     exports: [
         AccountSelectComponent,
+        ClickOutsideModule,
         NotificationModule,
     ],
 })

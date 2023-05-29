@@ -11,37 +11,45 @@ import { Page, paths } from "./modules/issue/constants/routes";
 import { SafePaymentComponent } from "./modules/safepayment/safe-payment.component";
 import { AccountService, ErrorHandlerService, StoreService } from "./services";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 @UntilDestroy()
 export class LetterOfCreditService {
-    isIssueVissible$ = this.store.isIssueVissible$;
+    closeLetterOfCreditCallback = () => { };
 
     constructor(
         private store: StoreService,
         private accountService: AccountService,
-        private router: Router,
         private errorHandler: ErrorHandlerService,
         private dialogService: DialogService,
+        private router: Router,
     ) {
-    }
-
-    handleOpenIssue(): void {
-        this.store.restoreDefaultState();
-
-        this.store.isIssueVissible = true;
-        this.router.navigateByUrl(paths[Page.ACCREDITATION_AMOUNT]);
-    }
-
-    handleCloseIssue(): void {
-        this.store.isIssueVissible = false;
     }
 
     changeIsOrdinalPayment(value: boolean): void {
         this.store.isOrdinalPayment = value;
     }
 
-    setStorePayment(payment: SmbPayment) {
+    setStorePayment(payment: SmbPayment): void {
         this.store.payment = payment;
+    }
+
+    setCloseLetterOfCreditCallback(fn: () => void): void {
+        this.closeLetterOfCreditCallback = fn;
+    }
+
+    setLetterOfCreditBaseUrl(url: string): void {
+        console.log(url);
+        this.store.letterOfCreditBaseUrl = url;
+    }
+
+    getLetterOfCreditBaseUrl(): string {
+        return this.store.letterOfCreditBaseUrl;
+    }
+
+    navigate(...args: string[]): void {
+        this.router.navigateByUrl([this.getLetterOfCreditBaseUrl()].concat(args).join('/'));
     }
 
     public getIsLoCVisible(receiverAutocomplete: any): Observable<boolean> {

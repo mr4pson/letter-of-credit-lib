@@ -20,6 +20,7 @@ import { FileUploadService } from "../../services/file-upload.service";
 import { toBase64 } from "../../../../utils/to-base64";
 import { takeUntilDestroyed, UntilDestroy } from "@psb/angular-tools";
 import { ApplicationFile } from "../../interfaces/application-file.inteface";
+import { LetterOfCreditService } from "../../../../letter-of-credit.service";
 
 @Component({
     selector: "send-application",
@@ -42,6 +43,7 @@ export class SendApplicationComponent implements OnInit {
         private letterService: LetterService,
         private fileUploadService: FileUploadService,
         private errorHandlerService: ErrorHandlerService,
+        private letterOfCreditService: LetterOfCreditService,
     ) { }
 
     ngOnInit(): void {
@@ -88,7 +90,6 @@ export class SendApplicationComponent implements OnInit {
                 tap(() => {
                     this.loading = false;
                     this.store.restoreDefaultState();
-                    this.store.isIssueVissible = false;
                     this.fileUploadService.files = [];
                     this.openSuccessDialog();
                 }),
@@ -139,7 +140,7 @@ export class SendApplicationComponent implements OnInit {
         dialogRef.afterClosed
             .pipe(
                 tap(() => {
-                    this.store.isIssueVissible = false;
+                    this.letterOfCreditService.closeLetterOfCreditCallback();
                 }),
                 takeUntilDestroyed(this)
             )

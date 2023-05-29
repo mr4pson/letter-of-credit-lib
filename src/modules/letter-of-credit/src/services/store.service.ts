@@ -12,15 +12,6 @@ import { LetterOfCredit } from "../modules/issue/interfaces/letter-of-credit.int
 
 @Injectable()
 export class StoreService {
-    private isIssueVissible$$ = new BehaviorSubject(false);
-    isIssueVissible$ = this.isIssueVissible$$.asObservable();
-    get isIssueVissible(): boolean {
-        return this.isIssueVissible$$.getValue();
-    }
-    set isIssueVissible(visibility: boolean) {
-        this.isIssueVissible$$.next(visibility);
-    }
-
     private isOrdinalPayment$$ = new BehaviorSubject(false);
     isOrdinalPayment$ = this.isOrdinalPayment$$.asObservable();
     get isOrdinalPayment(): boolean {
@@ -30,6 +21,7 @@ export class StoreService {
         this.isOrdinalPayment$$.next(value);
     }
 
+    letterOfCreditBaseUrl: string;
     payment: SmbPayment;
     receiverStatus: ReceiverStatus = ReceiverStatus.Unknown;
     clientEmail = "";

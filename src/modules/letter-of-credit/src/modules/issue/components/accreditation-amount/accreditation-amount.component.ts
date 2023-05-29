@@ -1,20 +1,20 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { Router } from '@angular/router';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { Page, paths } from '../../constants/routes';
+import { AccreditationAmountFormField } from '../../enums/accreditation-amount-form-field.enum';
 import { ClientAccountService } from '../../services/client-accounts.service';
 import { StepService } from '../../services/step.service';
-import { AccreditationAmountFormField } from '../../enums/accreditation-amount-form-field.enum';
 
+import { MoneyAmountPipe, UntilDestroy, takeUntilDestroyed } from '@psb/angular-tools';
 import { ButtonType } from '@psb/fe-ui-kit';
+import { LetterOfCreditService } from '../../../../letter-of-credit.service';
 import { AccountService, ErrorHandlerService, StoreService } from '../../../../services';
 import { isFormValid } from '../../../../utils';
-import { GET_ACCOUNTS_ERROR_MESSAGE, GET_COMMISSION_ERROR_MESSAGE } from './constants';
-import { AccreditationAmountFormService } from './accreditation-amount-form.service';
 import { ClientAccount } from '../../interfaces/client-account.interface';
-import { MoneyAmountPipe, takeUntilDestroyed, UntilDestroy } from '@psb/angular-tools';
+import { AccreditationAmountFormService } from './accreditation-amount-form.service';
+import { GET_ACCOUNTS_ERROR_MESSAGE, GET_COMMISSION_ERROR_MESSAGE } from './constants';
 
 @Component({
     selector: 'accreditation-amount',
@@ -37,21 +37,18 @@ export class AccreditationAmountComponent {
         private clientAccountService: ClientAccountService,
         private errorHandlerService: ErrorHandlerService,
         private stepService: StepService,
-        private router: Router,
         private formService: AccreditationAmountFormService,
         private formatMoney: MoneyAmountPipe,
+        private letterOfCreditService: LetterOfCreditService
     ) {
         this.initObservables();
         this.subscribeOnFormFieldsChanges();
     }
 
     private initObservables(): void {
-        this.accounts$ = this.store.isIssueVissible$.pipe(
-            filter(isIssueVisible => isIssueVisible),
-            switchMap(() => {
-                this.form.get(AccreditationAmountFormField.IssueSum).patchValue(this.store.payment?.summa.toString());
-                return this.clientAccountService.getClientAccounts();
-            }),
+        this.form.get(AccreditationAmountFormField.IssueSum).patchValue(this.store.payment?.summa.toString());
+
+        this.accounts$ = this.clientAccountService.getClientAccounts().pipe(
             tap(accounts => {
                 if (accounts.length) {
                     this.form.get(AccreditationAmountFormField.SelectedAccount).patchValue(accounts[0]);
@@ -101,7 +98,7 @@ export class AccreditationAmountComponent {
                 paths[Page.ACCREDITATION_AMOUNT],
                 `${this.formatMoney.transform((Number(this.formService.issueSum) + this.commission), '₽')}`,
             );
-            this.router.navigateByUrl(paths[Page.COUNTERPARTY]);
+            this.letterOfCreditService.navigate(paths[Page.COUNTERPARTY]);
         }
     }
 }

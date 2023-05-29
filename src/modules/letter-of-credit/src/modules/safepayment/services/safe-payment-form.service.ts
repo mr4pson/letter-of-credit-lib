@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { SafePaymentFormField } from "./enums/safe-payment-form-field.enum";
+import { SafePaymentFormField } from "../enums/safe-payment-form-field.enum";
 
 @Injectable()
 export class SafePaymentFormService {

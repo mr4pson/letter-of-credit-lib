@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { map, startWith } from 'rxjs/operators';
 
-import { Page, paths } from '../constants/routes';
-import { STEPS } from '../constants/constants';
 import { Observable } from 'rxjs';
+import { STEPS } from '../constants/constants';
+import { Page, paths } from '../constants/routes';
 
 @Injectable()
 export class StepService {
@@ -15,20 +15,25 @@ export class StepService {
         private router: Router,
     ) {
         this.initObservables();
+        this.getNoSlashUrl();
     }
 
     private initObservables(): void {
         this.currentUrl$ = this.router.events.pipe(
-            filter(event => event instanceof NavigationStart),
-            map(({ url }: NavigationStart) => {
-                const noSlashUrl = url.substring(1, url.length);
-                if (!noSlashUrl) {
-                    return paths[Page.ACCREDITATION_AMOUNT];
-                }
-
-                return noSlashUrl;
-            }),
+            startWith(this.getNoSlashUrl),
+            map(this.getNoSlashUrl),
         );
+    }
+
+    private getNoSlashUrl() {
+        const urlParts = window.location.pathname.split('/');
+        const noSlashUrl = urlParts[urlParts.length - 1];
+
+        if (!noSlashUrl) {
+            return paths[Page.ACCREDITATION_AMOUNT];
+        }
+
+        return noSlashUrl;
     }
 
     getPrevUrl(currentUrl: string): string {

@@ -4,16 +4,19 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Location } from '@angular/common';
 import { By } from '@angular/platform-browser';
 
-import { IssueComponent } from './issue.component';
-import { StepService } from './services/step.service';
-import { PsbModule } from '../psb/psb.module';
-import { IssueStepsComponent } from './components/issue-steps/issue-steps.component';
+import { IssueLayoutComponent } from './issue-layout.component';
+import { StepService } from '../../services/step.service';
+import { PsbModule } from '../../../psb/psb.module';
+import { IssueStepsComponent } from '../issue-steps/issue-steps.component';
 
-import { StoreService } from '../../services';
+import { AccountService, ErrorHandlerService, StorageService, StoreService } from '../../../../services';
+import { LetterOfCreditService } from '../../../../letter-of-credit.service';
+import { NotificationService } from '../../../ui-kit/components/notification/notification.service';
+import { CurrentStepNumberPipe } from '../../pipes/current-step-number.pipe';
 
-describe('IssueComponent', () => {
-    let component: IssueComponent;
-    let fixture: ComponentFixture<IssueComponent>;
+describe('IssueLayoutComponent', () => {
+    let component: IssueLayoutComponent;
+    let fixture: ComponentFixture<IssueLayoutComponent>;
     let location: Location;
     let router: Router;
 
@@ -24,8 +27,9 @@ describe('IssueComponent', () => {
 
         TestBed.configureTestingModule({
             declarations: [
-                IssueComponent,
+                IssueLayoutComponent,
                 IssueStepsComponent,
+                CurrentStepNumberPipe,
             ],
             imports: [
                 RouterTestingModule,
@@ -37,6 +41,11 @@ describe('IssueComponent', () => {
                     provide: StoreService,
                     useValue: mockStore,
                 },
+                LetterOfCreditService,
+                AccountService,
+                StorageService,
+                ErrorHandlerService,
+                NotificationService,
             ],
         }).compileComponents();
     }));
@@ -44,7 +53,7 @@ describe('IssueComponent', () => {
     beforeEach(() => {
         router = TestBed.inject(Router);
         location = TestBed.inject(Location);
-        fixture = TestBed.createComponent(IssueComponent);
+        fixture = TestBed.createComponent(IssueLayoutComponent);
         component = fixture.componentInstance;
 
         fixture.detectChanges();
@@ -52,7 +61,7 @@ describe('IssueComponent', () => {
     });
 
     it('Вызывает navigateBack при клике на кнопку назад', () => {
-        spyOn(component, 'navigateBack');
+        jest.spyOn(component, 'navigateBack');
 
         const backButton = fixture.debugElement.query(By.css('.back-btn'));
         backButton.nativeElement.click();
@@ -61,11 +70,11 @@ describe('IssueComponent', () => {
     });
 
     it('При инициализации текущего шага, как второго и при клике на кнопку назад редиректит на первый шаг', () => {
-        spyOn(router, 'navigateByUrl');
+        jest.spyOn(router, 'navigateByUrl');
         component.currentUrl = component.steps[1].url;
 
         component.navigateBack();
 
-        expect(router.navigateByUrl).toHaveBeenCalledWith(component.steps[0].url);
+        expect(router.navigateByUrl).toHaveBeenCalledWith(`/${component.steps[0].url}`);
     });
 });

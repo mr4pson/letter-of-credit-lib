@@ -1,16 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ReceiverStatus } from '../../../enums/receiver-status.enum';
-import { RELIABLE_MAP } from '../constants/reliable-map.constant';
 import { ReliableSign } from '../enums/reliable-sign.enum';
 
 @Pipe({
-    name: 'reliableColor',
+    name: 'reliableClass',
     pure: false,
 })
-export class ReliableColorPipe implements PipeTransform {
+export class ReliableClassPipe implements PipeTransform {
     transform(receiverStatus: ReceiverStatus): string {
         return (
-            RELIABLE_MAP.color[receiverStatus] ?? ReliableSign.reliableGray
+            ReliableSign[receiverStatus] ?? ReliableSign.reliableGrayClass
         );
     }
 }

@@ -13,9 +13,10 @@ import { AccreditationPeriodFormField } from '../../enums/accreditation-period-f
 import { AccreditationPeriodFormService } from './accreditation-period-form.service';
 import { clickAddDocBtn, clickRemoveBtn, clickSubmitButton, getClosingDocs } from './testing.utils';
 
-import { StoreService } from '../../../../services';
+import { AccountService, ErrorHandlerService, StorageService, StoreService } from '../../../../services';
 import { PsbModule } from '../../../../modules/psb/psb.module';
 import { isFormValid } from '../../../../utils';
+import { NotificationService } from '../../../ui-kit/components/notification/notification.service';
 
 describe('AccreditationPeriodComponent', () => {
     let component: AccreditationPeriodComponent;
@@ -53,6 +54,10 @@ describe('AccreditationPeriodComponent', () => {
                 StoreService,
                 StepService,
                 AccreditationPeriodFormService,
+                AccountService,
+                StorageService,
+                ErrorHandlerService,
+                NotificationService,
             ],
         }).compileComponents();
     }));
@@ -111,7 +116,7 @@ describe('AccreditationPeriodComponent', () => {
     });
 
     it('Вызывает handleSubmit при сабмите формы', () => {
-        spyOn(component, 'handleSubmit');
+        jest.spyOn(component, 'handleSubmit');
         clickSubmitButton(fixture);
 
         expect(component.handleSubmit).toHaveBeenCalled();
@@ -120,7 +125,7 @@ describe('AccreditationPeriodComponent', () => {
     it('Редиректит к маршруту send appliation при валидной форме', () => {
         component.form.patchValue(initialFormValue);
 
-        spyOn(router, 'navigateByUrl');
+        jest.spyOn(router, 'navigateByUrl');
         clickSubmitButton(fixture);
 
         expect(isFormValid(component.form)).toBeTruthy();

@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { UntilDestroy } from "@psb/angular-tools";
-import { StoreService } from "./services";
 
 @Component({
     selector: 'loc-letter-of-credit',
@@ -8,11 +6,4 @@ import { StoreService } from "./services";
     styleUrls: ['./letter-of-credit.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-@UntilDestroy()
-export class LetterOfCreditComponent {
-    isIssueVissible$ = this.store.isIssueVissible$;
-
-    constructor(
-        private store: StoreService,
-    ) { }
-}
+export class LetterOfCreditComponent { }

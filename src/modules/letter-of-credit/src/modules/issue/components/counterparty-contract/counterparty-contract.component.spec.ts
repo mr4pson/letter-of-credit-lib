@@ -92,7 +92,7 @@ describe('CounterpartyContractComponent', () => {
             rejectedFiles: [],
         } as NgxDropzoneChangeEvent;
 
-        spyOn(fileUploadService, 'selectFiles');
+        jest.spyOn(fileUploadService, 'selectFiles');
         component.handleSelectFiles(seletFilesEvent);
 
         expect(fileUploadService.selectFiles).toHaveBeenCalledWith(seletFilesEvent);
@@ -105,21 +105,21 @@ describe('CounterpartyContractComponent', () => {
             sizeFormatted: '',
         } as FileUploaded;
 
-        spyOn(fileUploadService, 'removeFile');
+        jest.spyOn(fileUploadService, 'removeFile');
         component.handleRemoveFile(fileUploaded);
 
         expect(fileUploadService.removeFile).toHaveBeenCalledWith(fileUploaded);
     });
 
     it('Вызывает setVat при клике на кнопку "НДС включён"', () => {
-        spyOn(component, 'setVat');
+        jest.spyOn(component, 'setVat');
         clickVatBtn(fixture);
 
         expect(component.setVat).toHaveBeenCalled();
     });
 
     it('Вызывает unsetVat при клике на кнопку "Без НДС"', () => {
-        spyOn(component, 'unsetVat');
+        jest.spyOn(component, 'unsetVat');
         clickNoVatBtn(fixture);
         fixture.detectChanges();
 
@@ -127,7 +127,7 @@ describe('CounterpartyContractComponent', () => {
     });
 
     it('Вызывает handleSubmit при сабмите формы', () => {
-        spyOn(component, 'handleSubmit');
+        jest.spyOn(component, 'handleSubmit');
         clickSubmitButton(fixture);
 
         expect(component.handleSubmit).toHaveBeenCalled();
@@ -136,7 +136,7 @@ describe('CounterpartyContractComponent', () => {
     it('Редиректит к маршруту accreditation period при валидной форме', () => {
         component.form.patchValue(initialForm);
 
-        spyOn(router, 'navigateByUrl');
+        jest.spyOn(router, 'navigateByUrl');
         clickSubmitButton(fixture);
 
         expect(isFormValid(component.form)).toBeTruthy();

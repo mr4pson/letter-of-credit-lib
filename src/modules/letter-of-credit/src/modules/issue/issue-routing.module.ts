@@ -7,18 +7,23 @@ import { CounterpartyContractComponent } from './components/counterparty-contrac
 import { СounterpartyComponent } from './components/counterparty/counterparty.component';
 import { SendApplicationComponent } from './components/send-application/send-application.component';
 import { Page, paths } from './constants/routes';
+import { IssueLayoutComponent } from './components/issue-layout/issue-layout.component';
 
-export const routes: Routes = [
-    { path: '', redirectTo: paths[Page.ACCREDITATION_AMOUNT], pathMatch: 'full' },
-    { path: paths[Page.ACCREDITATION_AMOUNT], component: AccreditationAmountComponent },
-    { path: paths[Page.COUNTERPARTY], component: СounterpartyComponent },
-    { path: paths[Page.COUNTERPARTY_CONTRACT], component: CounterpartyContractComponent },
-    { path: paths[Page.ACCREDITATION_PERIOD], component: AccreditationPeriodComponent },
-    { path: paths[Page.SEND_APPLICATION], component: SendApplicationComponent },
+const routes: Routes = [
+    {
+        path: '', component: IssueLayoutComponent, children: [
+            { path: '', redirectTo: paths[Page.ACCREDITATION_AMOUNT], pathMatch: 'full' },
+            { path: paths[Page.ACCREDITATION_AMOUNT], component: AccreditationAmountComponent },
+            { path: paths[Page.COUNTERPARTY], component: СounterpartyComponent },
+            { path: paths[Page.COUNTERPARTY_CONTRACT], component: CounterpartyContractComponent },
+            { path: paths[Page.ACCREDITATION_PERIOD], component: AccreditationPeriodComponent },
+            { path: paths[Page.SEND_APPLICATION], component: SendApplicationComponent },
+        ]
+    },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { useHash: true, scrollPositionRestoration: 'enabled' })],
+    imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
 export class IssueRoutingModule { }
